@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>RapidBlazor.Domain</RootNamespace>
+    <AssemblyName>RapidBlazor.Domain</AssemblyName>
+  </PropertyGroup>
+
+</Project>
