@@ -1,0 +1,22 @@
+﻿@page "/"
+@layout AuthenticationLayout
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<p>Redirecting to Login</p>
+
+@code {
+    protected override async void OnInitialized()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity.IsAuthenticated)
+        {
+            NavManager.NavigateTo("/personal/dashboard");
+        }
+        else
+        {
+            NavManager.NavigateTo("/authentication/login");
+        }
+    }
+}

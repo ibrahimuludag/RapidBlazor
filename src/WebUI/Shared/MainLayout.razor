@@ -1,5 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
 
 <MudThemeProvider Theme="_themeManager.Theme" />
 <MudDialogProvider />
@@ -37,7 +41,7 @@
                 <PersonCard Class="mt-n2" />
                 <MudDivider Class="mb-2" />
                 <MudListItem Text="Account" Icon="@Icons.Material.Outlined.Person" Href="/personal/account" />
-                <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login" Href="/pages/authentication/login" />
+                <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login" OnClick="BeginSignOut" />
             </ChildContent>
         </MudMenu>
     </MudAppBar>
@@ -60,7 +64,7 @@
     </MudMainContent>
 </MudLayout>
 
-<MudThemeManagerButton  OnClick="@((e) => OpenThemeManager(true))"/>
+<MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
 <MudThemeManager Open="_themeManagerOpen" OpenChanged="OpenThemeManager" Theme="_themeManager" ThemeChanged="UpdateTheme" />
 
 
@@ -95,8 +99,14 @@
     }
 
     private List<BreadcrumbItem> _items = new List<BreadcrumbItem>
-{
+    {
         new BreadcrumbItem("Personal", href: "#"),
         new BreadcrumbItem("Dashboard", href: "#"),
     };
+
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
+    }
 }

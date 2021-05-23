@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MudBlazor.Services;
+using RapidBlazor.WebUI.Models.Application;
 
 namespace RapidBlazor.WebUI
 {
@@ -18,7 +19,15 @@ namespace RapidBlazor.WebUI
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                builder.Configuration.Bind("OidcConfiguration", options.ProviderOptions);
+            });
+
+            ApplicationSettings appSettings = new ApplicationSettings();
+            builder.Configuration.Bind("AppSettings", appSettings);
+
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(appSettings.ApiUrl)});
 
             builder.Services.AddMudServices();
 

@@ -13,6 +13,7 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace RapidBlazor.Api
 {
@@ -62,6 +63,9 @@ namespace RapidBlazor.Api
 
                 configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+              .AddJwtBearer(options => Configuration.Bind("JwtBearerOptions", options));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

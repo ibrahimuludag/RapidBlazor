@@ -18,12 +18,12 @@
                     <MudCardContent>
                         <div class="d-flex justify-center mb-4">
                             <MudAvatar Image="@AvatarImageLink" Style="height:100px; width:100px;">
-                                @if(AvatarImageLink == null)
+                                @if (AvatarImageLink == null)
                                 {
                                     <MudIcon Icon="@AvatarIcon" Size="Size.Large"></MudIcon>
                                 }
                             </MudAvatar>
-                                
+
                         </div>
                         <MudText Align="Align.Center">@FirstName @LastName</MudText>
                         <MudText Align="Align.Center">@JobTitle</MudText>
@@ -166,7 +166,7 @@
 
     void DeletePicture()
     {
-        if(!String.IsNullOrEmpty(AvatarImageLink))
+        if (!String.IsNullOrEmpty(AvatarImageLink))
         {
             AvatarImageLink = null;
             AvatarIcon = Icons.Material.Outlined.SentimentVeryDissatisfied;
