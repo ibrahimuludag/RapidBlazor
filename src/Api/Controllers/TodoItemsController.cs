@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace RapidBlazor.Api.Controllers
 {
-    [Authorize]
     public class TodoItemsController : ApiControllerBase
     {
         [HttpGet]

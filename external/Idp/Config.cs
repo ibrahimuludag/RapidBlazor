@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using IdentityModel;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 
@@ -15,12 +16,19 @@ namespace Idp
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Email()
+
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("rapidblazor.api.api"),
+                new ApiScope("rapidblazor.api.api", new [] { 
+                    JwtClaimTypes.Email,
+                    JwtClaimTypes.Profile,
+                    JwtClaimTypes.Name,
+                    JwtClaimTypes.GivenName,
+                    JwtClaimTypes.FamilyName
+                })
             };
 
         public static IEnumerable<Client> Clients =>
@@ -35,8 +43,9 @@ namespace Idp
                     RequirePkce = true,
                     RedirectUris = { "https://localhost:5503/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://localhost:5503/authentication/logout-callback" },
-                    AllowedScopes = { "openid", "profile", "email" },
-                    AllowedCorsOrigins = { "https://localhost:5503" }
+                    AllowedScopes = { "openid", "profile", "email" , "rapidblazor.api.api" },
+                    AllowedCorsOrigins = { "https://localhost:5503" },
+                    RequireConsent = false
                 }
             };
     }
