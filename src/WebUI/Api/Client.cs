@@ -45,10 +45,10 @@ namespace RapidBlazor.WebUI.Api.Client
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.11.1.0 (NJsonSchema v10.4.3.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class TodoItemsClient : ITodoItemsClient
     {
-        private RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient _httpClient;
+        private RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
     
-        public TodoItemsClient(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient httpClient)
+        public TodoItemsClient(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient httpClient)
         {
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
@@ -66,9 +66,9 @@ namespace RapidBlazor.WebUI.Api.Client
         partial void UpdateJsonSerializerSettings(System.Text.Json.JsonSerializerOptions settings);
     
     
-        partial void PrepareRequest(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, string url);
-        partial void PrepareRequest(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
-        partial void ProcessResponse(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient client, System.Net.Http.HttpResponseMessage response);
+        partial void PrepareRequest(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient client, System.Net.Http.HttpResponseMessage response);
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public async System.Threading.Tasks.Task<PaginatedListOfTodoItemDto> GetTodoItemsWithPaginationAsync(int? listId = null, int? pageNumber = null, int? pageSize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
@@ -565,10 +565,10 @@ namespace RapidBlazor.WebUI.Api.Client
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.11.1.0 (NJsonSchema v10.4.3.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class TodoListsClient : ITodoListsClient
     {
-        private RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient _httpClient;
+        private RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
     
-        public TodoListsClient(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient httpClient)
+        public TodoListsClient(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient httpClient)
         {
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
@@ -586,9 +586,9 @@ namespace RapidBlazor.WebUI.Api.Client
         partial void UpdateJsonSerializerSettings(System.Text.Json.JsonSerializerOptions settings);
     
     
-        partial void PrepareRequest(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, string url);
-        partial void PrepareRequest(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
-        partial void ProcessResponse(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient client, System.Net.Http.HttpResponseMessage response);
+        partial void PrepareRequest(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient client, System.Net.Http.HttpResponseMessage response);
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public async System.Threading.Tasks.Task<TodosVm> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
@@ -1049,10 +1049,10 @@ namespace RapidBlazor.WebUI.Api.Client
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.11.1.0 (NJsonSchema v10.4.3.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class WeatherForecastClient : IWeatherForecastClient
     {
-        private RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient _httpClient;
+        private RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
     
-        public WeatherForecastClient(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient httpClient)
+        public WeatherForecastClient(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient httpClient)
         {
             _httpClient = httpClient;
             _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings);
@@ -1070,9 +1070,9 @@ namespace RapidBlazor.WebUI.Api.Client
         partial void UpdateJsonSerializerSettings(System.Text.Json.JsonSerializerOptions settings);
     
     
-        partial void PrepareRequest(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, string url);
-        partial void PrepareRequest(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
-        partial void ProcessResponse(RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient client, System.Net.Http.HttpResponseMessage response);
+        partial void PrepareRequest(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient client, System.Net.Http.HttpResponseMessage response);
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public async System.Threading.Tasks.Task<System.Collections.Generic.IList<WeatherForecast>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))

@@ -70,7 +70,7 @@
       "exceptionClass": "ApiException",
       "wrapDtoExceptions": true,
       "useHttpClientCreationMethod": true,
-      "httpClientType": "RapidBlazor.WebUI.Infra.HttpClients.IRapidBlazorApiClient",
+      "httpClientType": "RapidBlazor.WebUI.Infra.Http.IRapidBlazorApiClient",
       "useHttpRequestMessageCreationMethod": false,
       "useBaseUrl": false,
       "generateBaseUrlProperty": false,
