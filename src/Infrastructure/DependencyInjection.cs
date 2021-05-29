@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RapidBlazor.Infrastructure.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System;
 
 namespace RapidBlazor.Infrastructure
 {
@@ -24,7 +25,13 @@ namespace RapidBlazor.Infrastructure
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(
                         configuration.GetConnectionString("DefaultConnection"),
-                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                        sqlOptions => {
+                            sqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+                            sqlOptions.EnableRetryOnFailure( // TODO : Make this configuration
+                               maxRetryCount: 10,
+                               maxRetryDelay: TimeSpan.FromSeconds(30),
+                               errorNumbersToAdd: null);
+                        }));
             }
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());

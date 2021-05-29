@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using MudBlazor.Services;
 using RapidBlazor.WebUI.Models.Application;
 using RapidBlazor.WebUI.Infra.Authentication;
-using RapidBlazor.WebUI.Infra.HttpClients;
-using RapidBlazor.WebUI.Api.Client;
+using RapidBlazor.WebUI.Infra.Http;
 
 namespace RapidBlazor.WebUI
 {
@@ -29,9 +28,10 @@ namespace RapidBlazor.WebUI
 
 
             builder.Services.AddHttpClient<IRapidBlazorApiClient, RapidBlazorApiClient>(
-               client => client.BaseAddress = new Uri(appSettings.ApiUrl))
-               .AddHttpMessageHandler<RapidBlazorAuthorizationMessageHandler>();
-
+                client => client.BaseAddress = new Uri(appSettings.ApiUrl))
+            .AddHttpMessageHandler<RapidBlazorAuthorizationMessageHandler>()
+            .AddPolicyHandler(Policies.GetRetryPolicy())
+            .AddPolicyHandler(Policies.GetCircuitBreakerPolicy());
 
             builder.Services.AddMudServices();
             builder.Services.Configure<ApplicationSettings>(options =>
@@ -39,7 +39,13 @@ namespace RapidBlazor.WebUI
             );
 
             builder.Services.AddTransient<RapidBlazorAuthorizationMessageHandler>();
-            builder.Services.AddScoped<IWeatherForecastClient, WeatherForecastClient>();
+
+            builder.Services.Scan(scan =>
+                scan.FromCallingAssembly()
+                .AddClasses(classes => classes.WithAttribute(typeof(System.CodeDom.Compiler.GeneratedCodeAttribute)))
+                .AsMatchingInterface()
+                .WithScopedLifetime());
+
 
             builder.Services.AddAuthorizationCore(options =>
             {
@@ -49,5 +55,7 @@ namespace RapidBlazor.WebUI
 
             await builder.Build().RunAsync();
         }
+        
+
     }
 }
