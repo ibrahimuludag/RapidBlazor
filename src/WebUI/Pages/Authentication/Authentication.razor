@@ -3,7 +3,12 @@
 
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
-<RemoteAuthenticatorView Action="@Action" />
+@*TODO : Customize messages*@ 
+<RemoteAuthenticatorView Action="@Action" >
+    <LoggingIn>
+        Logging in
+    </LoggingIn>
+</RemoteAuthenticatorView>
 @code{
     [Parameter] public string Action { get; set; }
 }

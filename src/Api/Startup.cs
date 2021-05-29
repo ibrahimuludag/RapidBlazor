@@ -14,8 +14,6 @@ using NSwag.Generation.Processors.Security;
 using System.Linq;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using RapidBlazor.Api.Infra.Options;
 
 namespace RapidBlazor.Api
@@ -34,11 +32,6 @@ namespace RapidBlazor.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var requireAuthenticatedUserPolicy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
-
-
             services.AddApplication();
             services.AddInfrastructure(Configuration);
 
@@ -51,8 +44,7 @@ namespace RapidBlazor.Api
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();
 
-            services.AddControllers(
-                config => config.Filters.Add(new AuthorizeFilter(requireAuthenticatedUserPolicy)))
+            services.AddControllers()
                 .AddFluentValidation();
 
             // Customise default API behaviour
@@ -81,11 +73,13 @@ namespace RapidBlazor.Api
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ApiScope", policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("scope", Configuration.GetValue<string>("ApplicationSettings:RequiredScope"));
-                });
+                //options.AddPolicy("ApiScope", policy =>
+                //{
+                //    policy.RequireAuthenticatedUser();
+                //    policy.RequireClaim("scope", Configuration.GetValue<string>("ApplicationSettings:RequiredScope"));
+                //});
+                options.AddPolicy(nameof(Shared.Policies.ApiPolicy), Shared.Policies.ApiPolicy());
+
             });
 
             services.AddCors(options =>
@@ -137,7 +131,7 @@ namespace RapidBlazor.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers()
-                        .RequireAuthorization("ApiScope");
+                        .RequireAuthorization(nameof(Shared.Policies.ApiPolicy));
             });
         }
     }

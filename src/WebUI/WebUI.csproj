@@ -20,4 +20,8 @@
     <Folder Include="Pages\Applications\" />
     <Folder Include="Pages\Pages\Profile\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
 </Project>
