@@ -13,14 +13,12 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using RapidBlazor.Api.Infra.Options;
+using RapidBlazor.Api.Filters;
 
 namespace RapidBlazor.Api
 {
     public class Startup
     {
-        readonly string AllowedCorsOriginsPolicyName = "AllowedCorsOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -44,7 +42,8 @@ namespace RapidBlazor.Api
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();
 
-            services.AddControllers()
+            services.AddControllers(options =>
+                    options.Filters.Add<ApiExceptionFilterAttribute>())
                 .AddFluentValidation();
 
             // Customise default API behaviour
@@ -67,35 +66,6 @@ namespace RapidBlazor.Api
                 configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
 
-            // https://identityserver4.readthedocs.io/en/latest/quickstarts/1_client_credentials.html?highlight=apiscopes
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-              .AddJwtBearer(options => Configuration.Bind("JwtBearerOptions", options));
-
-            services.AddAuthorization(options =>
-            {
-                //options.AddPolicy("ApiScope", policy =>
-                //{
-                //    policy.RequireAuthenticatedUser();
-                //    policy.RequireClaim("scope", Configuration.GetValue<string>("ApplicationSettings:RequiredScope"));
-                //});
-                options.AddPolicy(nameof(Shared.Policies.ApiPolicy), Shared.Policies.ApiPolicy());
-
-            });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: AllowedCorsOriginsPolicyName, builder =>
-                    {
-                        builder.WithOrigins(Configuration.GetSection("AllowedCorsOrigins").Get<string[]>())
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                    });
-            });
-
-            services.AddOptions<ApplicationSettings>()
-                .Bind(Configuration.GetSection("ApplicationSettings"));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,7 +74,7 @@ namespace RapidBlazor.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint(new MigrationsEndPointOptions());
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -124,7 +94,7 @@ namespace RapidBlazor.Api
             });
 
             app.UseRouting();
-            app.UseCors(AllowedCorsOriginsPolicyName);
+            app.UseCors(Constants.AllowedCorsOriginsPolicyName);
 
             app.UseAuthentication();
             app.UseAuthorization();

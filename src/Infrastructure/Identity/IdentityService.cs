@@ -42,8 +42,14 @@ namespace RapidBlazor.Infrastructure.Identity
             return true;
         }
 
-        
+        public Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
+        {
+            throw new System.NotImplementedException();
+        }
 
-        
+        public Task<Result> DeleteUserAsync(string userId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

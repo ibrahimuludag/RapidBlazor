@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using RapidBlazor.Infrastructure.Models;
 
 namespace RapidBlazor.Infrastructure
 {
@@ -44,13 +46,37 @@ namespace RapidBlazor.Infrastructure
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            // https://identityserver4.readthedocs.io/en/latest/quickstarts/1_client_credentials.html?highlight=apiscopes
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+              .AddJwtBearer(options => configuration.Bind("JwtBearerOptions", options));
 
             services.AddAuthorization(options =>
             {
+                // TODO : 
                 options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator"));
+
+                //options.AddPolicy("ApiScope", policy =>
+                //{
+                //    policy.RequireAuthenticatedUser();
+                //    policy.RequireClaim("scope", Configuration.GetValue<string>("ApplicationSettings:RequiredScope"));
+                //});
+                options.AddPolicy(nameof(Shared.Policies.ApiPolicy), Shared.Policies.ApiPolicy());
+
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: Constants.AllowedCorsOriginsPolicyName, builder =>
+                {
+                    builder.WithOrigins(configuration.GetSection("AllowedCorsOrigins").Get<string[]>())
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            });
+
+            services.AddOptions<ApplicationSettings>()
+                .Bind(configuration.GetSection("ApplicationSettings"));
 
             return services;
         }
