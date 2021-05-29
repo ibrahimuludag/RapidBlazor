@@ -8,7 +8,6 @@ using RapidBlazor.WebUI.Models.Application;
 using RapidBlazor.WebUI.Infra.Authentication;
 using RapidBlazor.WebUI.Infra.HttpClients;
 using RapidBlazor.WebUI.Api.Client;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace RapidBlazor.WebUI
 {
@@ -25,7 +24,6 @@ namespace RapidBlazor.WebUI
                 builder.Configuration.Bind("UserOptions", options.UserOptions);
             });
 
-
             ApplicationSettings appSettings = new ApplicationSettings();
             builder.Configuration.Bind("ApplicationSettings", appSettings);
 
@@ -37,7 +35,7 @@ namespace RapidBlazor.WebUI
 
             builder.Services.AddMudServices();
             builder.Services.Configure<ApplicationSettings>(options =>
-                builder.Configuration.Bind("ApplicationSettings", options)
+                builder.Configuration.Bind("ApplicationSettings", options) // TODO : Duplicate
             );
 
             builder.Services.AddTransient<RapidBlazorAuthorizationMessageHandler>();
