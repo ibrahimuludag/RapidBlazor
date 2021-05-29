@@ -3,9 +3,9 @@ using RapidBlazor.WebUI.Api.Client;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace RapidBlazor.WebUI.Pages.Monitor
+namespace RapidBlazor.WebUI.Pages.Samples
 {
-    public class FetchDataBase : ComponentBase
+    public partial class FetchData
     {
         protected IList<WeatherForecast> Forecasts { get; private set; }
 
