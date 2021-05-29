@@ -1,15 +1,12 @@
 ﻿using RapidBlazor.Application.Common.Interfaces;
 using RapidBlazor.Infrastructure.Files;
-using RapidBlazor.Infrastructure.Identity;
 using RapidBlazor.Infrastructure.Persistence;
 using RapidBlazor.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using RapidBlazor.Infrastructure.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace RapidBlazor.Infrastructure
 {
@@ -34,16 +31,7 @@ namespace RapidBlazor.Infrastructure
 
             services.AddScoped<IDomainEventService, DomainEventService>();
 
-            services
-                .AddDefaultIdentity<ApplicationUser>()
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-
             services.AddTransient<IDateTime, DateTimeService>();
-            services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
             // https://identityserver4.readthedocs.io/en/latest/quickstarts/1_client_credentials.html?highlight=apiscopes

@@ -13,14 +13,11 @@ namespace RapidBlazor.Application.Common.Behaviours
     public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly ICurrentUserService _currentUserService;
-        private readonly IIdentityService _identityService;
 
         public AuthorizationBehaviour(
-            ICurrentUserService currentUserService,
-            IIdentityService identityService)
+            ICurrentUserService currentUserService)
         {
             _currentUserService = currentUserService;
-            _identityService = identityService;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -45,7 +42,7 @@ namespace RapidBlazor.Application.Common.Behaviours
                         var authorized = false;
                         foreach (var role in roles)
                         {
-                            var isInRole = await _identityService.IsInRoleAsync(_currentUserService.UserId, role.Trim());
+                            var isInRole = _currentUserService.IsInRole(role.Trim());
                             if (isInRole)
                             {
                                 authorized = true;
@@ -67,7 +64,7 @@ namespace RapidBlazor.Application.Common.Behaviours
                 {
                     foreach(var policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
                     {
-                        var authorized = await _identityService.AuthorizeAsync(_currentUserService.UserId, policy);
+                        var authorized = _currentUserService.IsInPolicy(policy);
 
                         if (!authorized)
                         {
