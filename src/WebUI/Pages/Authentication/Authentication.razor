@@ -4,8 +4,16 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
 @*TODO : Customize messages*@ 
-<RemoteAuthenticatorView Action="@Action" >
+<RemoteAuthenticatorView Action="@Action">
     <LoggingIn>
         Logging in
     </LoggingIn>
+    <LogOutSucceeded>
+        <p>
+            You have successfully logged out.
+        </p>
+        <p>
+            Click here to <MudLink Href="/authentication/login">Login</MudLink>
+        </p>
+    </LogOutSucceeded>
 </RemoteAuthenticatorView>
