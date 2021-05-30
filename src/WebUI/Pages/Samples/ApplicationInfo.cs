@@ -12,12 +12,7 @@ namespace RapidBlazor.WebUI.Pages.Samples
     {
         [Inject]
         public IAccessTokenProvider AccessTokenProvider { get; set; }
-
-        [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
         public string AccessToken { get; set; }
-        private string IsAdmin { get; set; }
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -30,16 +25,6 @@ namespace RapidBlazor.WebUI.Pages.Samples
             }
             
             await base.OnInitializedAsync();
-        }
-
-        protected override async Task OnParametersSetAsync()
-        {
-            AuthenticationState authenticationState;
-
-            authenticationState = await authenticationStateTask;
-            //IsAdmin = authenticationState.User.IsInRole("admin");
-            IsAdmin = string.Join( "<br />", authenticationState.User.Claims.ToArray().Select(c => c.Type + " " + c.Value));
-
         }
     }
 }

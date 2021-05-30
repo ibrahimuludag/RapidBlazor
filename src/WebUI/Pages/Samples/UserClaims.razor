@@ -1,0 +1,15 @@
+﻿@page "/samples/user-claims"
+@attribute [Authorize]
+
+<h2>Hello @User.Identity.Name, here's the list of your claims:</h2>
+<ul>
+    @foreach (var claim in User.Claims)
+    {
+<li><b>@claim.Type</b>: @claim.Value</li>
+}
+</ul>
+
+@code{
+
+
+}

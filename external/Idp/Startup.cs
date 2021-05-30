@@ -42,7 +42,6 @@ namespace Idp
             // in-memory, code config
             builder.AddInMemoryIdentityResources(Config.IdentityResources);
             builder.AddInMemoryApiScopes(Config.ApiScopes);
-            builder.AddInMemoryApiResources(Config.Apis);
             builder.AddInMemoryClients(Config.Clients);
 
             // not recommended for production - you need to store your key material somewhere secure

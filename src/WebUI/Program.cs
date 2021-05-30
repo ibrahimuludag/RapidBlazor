@@ -7,7 +7,6 @@ using MudBlazor.Services;
 using RapidBlazor.WebUI.Models.Application;
 using RapidBlazor.WebUI.Infra.Authentication;
 using RapidBlazor.WebUI.Infra.Http;
-using System.Linq;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace RapidBlazor.WebUI
