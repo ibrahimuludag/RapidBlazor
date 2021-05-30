@@ -33,7 +33,7 @@
     </NotAuthorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="admin">
+<AuthorizeView Policy="@nameof(RapidBlazor.Shared.Policies.AdminPolicy)">
     <Authorized>
         <MudDivider Class="mb-4" />
 
