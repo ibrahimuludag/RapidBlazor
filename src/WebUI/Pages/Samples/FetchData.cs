@@ -10,10 +10,10 @@ namespace RapidBlazor.WebUI.Pages.Samples
         protected IList<WeatherForecast> Forecasts { get; private set; }
 
         [Inject]
-        private IWeatherForecastClient ApiClient { get; set; }
+        private IWeatherForecastClient Client { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            Forecasts = await ApiClient.GetAsync();
+            Forecasts = await Client.GetAsync();
         }
     }
 }

@@ -10,7 +10,10 @@ namespace RapidBlazor.WebUI.Infra.Authentication
         public RapidBlazorAuthorizationMessageHandler(IAccessTokenProvider accessTokenProvider,
             NavigationManager navigationManager, IOptions<ApplicationSettings> applicationSettings) : base(accessTokenProvider , navigationManager)
         {
-            ConfigureHandler(authorizedUrls: new[] { applicationSettings.Value.ApiUrl });
+            ConfigureHandler(
+                authorizedUrls: new[] { applicationSettings.Value.ApiUrl },
+                scopes: new[] { "rapidblazor.api.scope" } // TODO : get from options
+                );
         }
     }
 }

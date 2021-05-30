@@ -14,20 +14,29 @@ namespace Idp
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                // let's include the role claim in the profile
+                new ProfileWithRoleIdentityResource(),
                 new IdentityResources.Email()
 
             };
 
+        public static IEnumerable<ApiResource> Apis =>
+           new ApiResource[]
+           {
+                // the api requires the role claim
+                new ApiResource("rapidblazor.api.api", "RapidBlazor API", new[] { JwtClaimTypes.Role })
+           };
+
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("rapidblazor.api.api", new [] { 
+                new ApiScope("rapidblazor.api.scope", new [] { 
                     JwtClaimTypes.Email,
                     JwtClaimTypes.Profile,
                     JwtClaimTypes.Name,
                     JwtClaimTypes.GivenName,
-                    JwtClaimTypes.FamilyName
+                    JwtClaimTypes.FamilyName,
+                    JwtClaimTypes.Role
                 })
             };
 
@@ -43,9 +52,10 @@ namespace Idp
                     RequirePkce = true,
                     RedirectUris = { "https://localhost:5503/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://localhost:5503/authentication/logout-callback" },
-                    AllowedScopes = { "openid", "profile", "email" , "rapidblazor.api.api" },
+                    AllowedScopes = { "openid", "profile", "email" , "rapidblazor.api.scope" },
                     AllowedCorsOrigins = { "https://localhost:5503" },
-                    RequireConsent = false
+                    RequireConsent = false,
+                    Enabled = true
                 }
             };
     }

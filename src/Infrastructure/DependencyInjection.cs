@@ -47,16 +47,10 @@ namespace RapidBlazor.Infrastructure
 
             services.AddAuthorization(options =>
             {
-                // TODO : 
-                options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator"));
-
-                //options.AddPolicy("ApiScope", policy =>
-                //{
-                //    policy.RequireAuthenticatedUser();
-                //    policy.RequireClaim("scope", Configuration.GetValue<string>("ApplicationSettings:RequiredScope"));
-                //});
-                options.AddPolicy(nameof(Shared.Policies.ApiPolicy), Shared.Policies.ApiPolicy());
-
+                foreach (var policy in Shared.Constants.ApiPolicies)
+                {
+                    options.AddPolicy(policy.Name, policy.Value);
+                }
             });
 
             services.AddCors(options =>

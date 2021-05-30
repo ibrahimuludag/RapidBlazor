@@ -7,6 +7,8 @@ using MudBlazor.Services;
 using RapidBlazor.WebUI.Models.Application;
 using RapidBlazor.WebUI.Infra.Authentication;
 using RapidBlazor.WebUI.Infra.Http;
+using System.Linq;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace RapidBlazor.WebUI
 {
@@ -21,7 +23,7 @@ namespace RapidBlazor.WebUI
             {
                 builder.Configuration.Bind("OidcConfiguration", options.ProviderOptions);
                 builder.Configuration.Bind("UserOptions", options.UserOptions);
-            });
+            }).AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
 
             ApplicationSettings appSettings = new ApplicationSettings();
             builder.Configuration.Bind("ApplicationSettings", appSettings);
@@ -49,13 +51,13 @@ namespace RapidBlazor.WebUI
 
             builder.Services.AddAuthorizationCore(options =>
             {
-                // TODO : Have Api and Blazor Policies Seperately
-                //options.AddPolicy(nameof(RapidBlazor.Shared.Policies.ApiPolicy), RapidBlazor.Shared.Policies.ApiPolicy());
+                foreach(var policy in RapidBlazor.Shared.Constants.WebUIPolicies)
+                {
+                    options.AddPolicy(policy.Name, policy.Value);
+                }
             });
 
             await builder.Build().RunAsync();
         }
-        
-
     }
 }

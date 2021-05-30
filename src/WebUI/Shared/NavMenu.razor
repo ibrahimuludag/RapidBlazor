@@ -31,3 +31,13 @@
         </MudNavMenu>
     </NotAuthorized>
 </AuthorizeView>
+
+<AuthorizeView Roles="admin">
+    <Authorized>
+        <MudDivider Class="mb-4" />
+
+        <MudNavMenu>
+            <MudNavLink Href="/admin" Icon="@Icons.Material.Outlined.AdminPanelSettings">Admin</MudNavLink>
+        </MudNavMenu>
+    </Authorized>
+</AuthorizeView>

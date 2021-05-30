@@ -6,6 +6,31 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/Admin": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "operationId": "Admin_Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
     "/api/TodoItems": {
       "get": {
         "tags": [

@@ -1,0 +1,4 @@
+﻿@page "/admin"
+@attribute [Authorize(Policy = nameof(RapidBlazor.Shared.Policies.AdminPolicy))]
+
+<p>@Message</p>
