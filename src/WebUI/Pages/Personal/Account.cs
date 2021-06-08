@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
+using RapidBlazor.WebUI.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -29,15 +30,21 @@ namespace RapidBlazor.WebUI.Pages.Personal
         public bool NotificationChat_3 { get; set; } = true;
         public bool NotificationChat_4 { get; set; }
 
-        // TODO
         [CascadingParameter]
         Task<AuthenticationState> authenticationStateTask { get; set; }
-
-
+        [CascadingParameter]
+        public MainLayout Layout { get; set; }
         protected override async Task OnInitializedAsync()
         {
             var authenticationState = await authenticationStateTask;
             FirstName = authenticationState.User.Identity.Name;
+
+            Layout.BreadcrumbItems = new List<BreadcrumbItem>
+            {
+                new BreadcrumbItem("Personal", href: "#"),
+                new BreadcrumbItem("Account", href: "#"),
+            };
+
             await base.OnInitializedAsync();
         }
 
