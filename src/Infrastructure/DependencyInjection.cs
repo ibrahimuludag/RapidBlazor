@@ -47,7 +47,7 @@ namespace RapidBlazor.Infrastructure
 
             services.AddAuthorization(options =>
             {
-                foreach (var policy in Shared.Constants.ApiPolicies)
+                foreach (var policy in Shared.Policies.Constants.ApiPolicies)
                 {
                     options.AddPolicy(policy.Name, policy.Value);
                 }

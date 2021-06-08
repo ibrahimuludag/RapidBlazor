@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace RapidBlazor.Shared
+namespace RapidBlazor.Shared.Policies
 {
     public static class Policies
     {

@@ -101,7 +101,7 @@ namespace RapidBlazor.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers()
-                        .RequireAuthorization(nameof(Shared.Policies.ApiPolicy));
+                        .RequireAuthorization(nameof(Shared.Policies.Policies.ApiPolicy));
             });
         }
     }

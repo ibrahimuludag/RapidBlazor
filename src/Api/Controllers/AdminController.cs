@@ -11,7 +11,7 @@ namespace RapidBlazor.Api.Controllers
     public class AdminController : ApiControllerBase
     {
         [HttpGet]
-        [Authorize(Policy = nameof(Shared.Policies.AdminPolicy))]
+        [Authorize(Policy = nameof(Shared.Policies.Policies.AdminPolicy))]
         public ActionResult<string> Get()
         {
             return Ok("This message is only visible to admins");

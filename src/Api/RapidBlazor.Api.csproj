@@ -27,9 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\Application\RapidBlazor.Application.csproj" />
+    <ProjectReference Include="..\Infrastructure\RapidBlazor.Infrastructure.csproj" />
+    <ProjectReference Include="..\Shared\RapidBlazor.Shared.csproj" />
   </ItemGroup>
 
   <Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
