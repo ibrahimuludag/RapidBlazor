@@ -14,12 +14,12 @@ using NSwag.Generation.Processors.Security;
 using System.Linq;
 using FluentValidation.AspNetCore;
 using RapidBlazor.Api.Filters;
+using Serilog;
 
 namespace RapidBlazor.Api
 {
     public class Startup
     {
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -65,7 +65,6 @@ namespace RapidBlazor.Api
 
                 configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +81,7 @@ namespace RapidBlazor.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSerilogRequestLogging(); 
 
             app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
