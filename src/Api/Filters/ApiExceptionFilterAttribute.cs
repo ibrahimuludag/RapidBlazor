@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace RapidBlazor.Api.Filters
 {
@@ -11,8 +12,8 @@ namespace RapidBlazor.Api.Filters
     {
 
         private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;
-
-        public ApiExceptionFilterAttribute()
+        private readonly ILogger<ApiExceptionFilterAttribute> _logger;
+        public ApiExceptionFilterAttribute(ILogger<ApiExceptionFilterAttribute> logger)
         {
             // Register known exception types and handlers.
             _exceptionHandlers = new Dictionary<Type, Action<ExceptionContext>>
@@ -22,6 +23,8 @@ namespace RapidBlazor.Api.Filters
                 { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
                 { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
             };
+
+            _logger = logger;
         }
 
         public override void OnException(ExceptionContext context)
@@ -33,6 +36,8 @@ namespace RapidBlazor.Api.Filters
 
         private void HandleException(ExceptionContext context)
         {
+            _logger.LogError(context.Exception, context.Exception.Message);
+
             Type type = context.Exception.GetType();
             if (_exceptionHandlers.ContainsKey(type))
             {
