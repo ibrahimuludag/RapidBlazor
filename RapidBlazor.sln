@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Idp", "external\Idp\Idp.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBlazor.Shared", "src\Shared\RapidBlazor.Shared.csproj", "{390F1B1E-480F-4EA1-BDD6-49B9CB8D0CFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidBlazor.DbMigration", "src\RapidBlazor.DbMigration\RapidBlazor.DbMigration.csproj", "{0B8F004D-F25B-4E65-825A-554F4D1ADA34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{390F1B1E-480F-4EA1-BDD6-49B9CB8D0CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{390F1B1E-480F-4EA1-BDD6-49B9CB8D0CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{390F1B1E-480F-4EA1-BDD6-49B9CB8D0CFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B8F004D-F25B-4E65-825A-554F4D1ADA34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B8F004D-F25B-4E65-825A-554F4D1ADA34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B8F004D-F25B-4E65-825A-554F4D1ADA34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B8F004D-F25B-4E65-825A-554F4D1ADA34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{08AE4BA2-70C8-4006-9E22-DAC607D40282} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 		{C2B711FC-53BB-479D-98D8-7C3C00338D0C} = {37FD2C7B-5AAE-4824-9BC3-7BF0A377287A}
 		{390F1B1E-480F-4EA1-BDD6-49B9CB8D0CFA} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
+		{0B8F004D-F25B-4E65-825A-554F4D1ADA34} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}
