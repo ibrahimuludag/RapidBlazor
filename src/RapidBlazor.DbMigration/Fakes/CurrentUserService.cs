@@ -1,4 +1,5 @@
 ﻿using RapidBlazor.Application.Common.Interfaces;
+using System.Threading.Tasks;
 
 namespace RapidBlazor.DbMigration.Fakes
 {
@@ -11,9 +12,9 @@ namespace RapidBlazor.DbMigration.Fakes
             return "SYSTEM";
         }
 
-        public bool IsInPolicy(string policyName)
+        public Task<bool> IsInPolicy(string policyName)
         {
-            return true;
+            return Task.FromResult(true);
         }
 
         public bool IsInRole(string role)

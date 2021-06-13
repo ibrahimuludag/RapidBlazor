@@ -26,6 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\RapidBlazor.Shared.csproj" />
+    <ProjectReference Include="..\RapidBlazor.Shared\RapidBlazor.Shared.csproj" />
   </ItemGroup>
 </Project>

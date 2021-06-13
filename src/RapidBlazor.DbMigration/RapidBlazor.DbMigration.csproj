@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\RapidBlazor.Infrastructure.csproj" />
+    <ProjectReference Include="..\RapidBlazor.Infrastructure\RapidBlazor.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

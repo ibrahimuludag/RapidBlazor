@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\RapidBlazor.Application.csproj" />
-    <ProjectReference Include="..\Shared\RapidBlazor.Shared.csproj" />
+    <ProjectReference Include="..\RapidBlazor.Application\RapidBlazor.Application.csproj" />
+    <ProjectReference Include="..\RapidBlazor.Shared\RapidBlazor.Shared.csproj" />
   </ItemGroup>
 
 </Project>

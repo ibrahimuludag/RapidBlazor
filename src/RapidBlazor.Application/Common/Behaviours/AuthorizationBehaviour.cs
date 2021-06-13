@@ -64,7 +64,7 @@ namespace RapidBlazor.Application.Common.Behaviours
                 {
                     foreach(var policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
                     {
-                        var authorized = _currentUserService.IsInPolicy(policy);
+                        var authorized = await _currentUserService.IsInPolicy(policy);
 
                         if (!authorized)
                         {
