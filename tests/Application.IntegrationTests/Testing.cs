@@ -126,7 +126,7 @@ public class Testing
         //var errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
 
         //throw new Exception($"Unable to create {userName}.{Environment.NewLine}{errors}");
-        _currentUserId = "888";
+        _currentUserId = "SYSTEM";
         return _currentUserId;
     }
 

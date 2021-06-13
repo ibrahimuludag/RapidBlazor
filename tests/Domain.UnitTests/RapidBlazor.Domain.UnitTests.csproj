@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Domain\RapidBlazor.Domain.csproj" />
+    <ProjectReference Include="..\..\src\RapidBlazor.Domain\RapidBlazor.Domain.csproj" />
   </ItemGroup>
 
 </Project>
