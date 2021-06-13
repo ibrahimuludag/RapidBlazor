@@ -15,6 +15,7 @@ using System.Linq;
 using FluentValidation.AspNetCore;
 using RapidBlazor.Api.Filters;
 using Serilog;
+using RapidBlazor.Infrastructure.Services;
 
 namespace RapidBlazor.Api
 {
@@ -35,7 +36,10 @@ namespace RapidBlazor.Api
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddMemoryCache();
+
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IApplicationCache, ApplicationCache>();
 
             services.AddHttpContextAccessor();
 
