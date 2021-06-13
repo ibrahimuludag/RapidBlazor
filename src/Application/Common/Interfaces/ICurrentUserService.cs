@@ -9,7 +9,7 @@ namespace RapidBlazor.Application.Common.Interfaces
 
         bool IsInRole(string role);
 
-        bool IsInPolicy(string policyName);
+        Task<bool> IsInPolicy(string policyName);
 
     }
 }
