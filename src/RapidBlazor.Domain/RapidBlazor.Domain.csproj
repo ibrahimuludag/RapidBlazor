@@ -6,4 +6,8 @@
     <AssemblyName>RapidBlazor.Domain</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\Hr\" />
+  </ItemGroup>
+
 </Project>
