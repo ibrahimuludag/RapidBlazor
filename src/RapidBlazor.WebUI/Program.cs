@@ -50,7 +50,7 @@ namespace RapidBlazor.WebUI
 
             builder.Services.AddAuthorizationCore(options =>
             {
-                foreach(var policy in RapidBlazor.Shared.Policies.Constants.WebUIPolicies)
+                foreach(var policy in RapidBlazor.Shared.Security.Constants.WebUIPolicies)
                 {
                     options.AddPolicy(policy.Name, policy.Value);
                 }
