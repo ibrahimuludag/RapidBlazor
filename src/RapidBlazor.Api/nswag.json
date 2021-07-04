@@ -141,7 +141,7 @@
       "checksumCacheEnabled": false,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "../WebUI/RapidBlazor.Api/Client.cs",
+      "output": "../RapidBlazor.WebUI/Api/Client.cs",
       "newLineBehavior": "Auto"
     }
   }

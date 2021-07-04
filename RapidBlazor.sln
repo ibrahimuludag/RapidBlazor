@@ -15,11 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6ED356A7-8B4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{664D406C-2F83-48F0-BFC3-408D5CB53C65}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBlazor.Application.UnitTests", "tests\Application.UnitTests\RapidBlazor.Application.UnitTests.csproj", "{DEFF4009-1FAB-4392-80B6-707E2DC5C00B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBlazor.Application.UnitTests", "tests\RapidBlazor.Application.UnitTests\RapidBlazor.Application.UnitTests.csproj", "{DEFF4009-1FAB-4392-80B6-707E2DC5C00B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBlazor.Domain.UnitTests", "tests\Domain.UnitTests\RapidBlazor.Domain.UnitTests.csproj", "{DC37FD87-552C-4613-9F16-1537CA522898}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBlazor.Domain.UnitTests", "tests\RapidBlazor.Domain.UnitTests\RapidBlazor.Domain.UnitTests.csproj", "{DC37FD87-552C-4613-9F16-1537CA522898}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBlazor.Application.IntegrationTests", "tests\Application.IntegrationTests\RapidBlazor.Application.IntegrationTests.csproj", "{277029AF-D9E1-4B75-9F11-48FEA7345AD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBlazor.Application.IntegrationTests", "tests\RapidBlazor.Application.IntegrationTests\RapidBlazor.Application.IntegrationTests.csproj", "{277029AF-D9E1-4B75-9F11-48FEA7345AD7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBlazor.WebUI", "src\RapidBlazor.WebUI\RapidBlazor.WebUI.csproj", "{08AE4BA2-70C8-4006-9E22-DAC607D40282}"
 EndProject
