@@ -5,9 +5,9 @@ namespace Idp
 {
     public class ProfileWithRoleIdentityResource : IdentityResources.Profile
     {
-        public ProfileWithRoleIdentityResource()
+        public ProfileWithRoleIdentityResource() 
         {
-            this.UserClaims.Add(JwtClaimTypes.Role);
+            UserClaims.Add(JwtClaimTypes.Role);
         }
     }
 }

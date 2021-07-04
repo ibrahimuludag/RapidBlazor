@@ -4,12 +4,6 @@ namespace RapidBlazor.Shared.Policies
 {
     public static class Policies
     {
-        public static AuthorizationPolicy ApiPolicy = 
-            new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .RequireClaim("scope", "rapidblazor.api.scope") 
-                .Build();
-
         public static AuthorizationPolicy AdminPolicy = 
             new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()

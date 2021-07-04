@@ -101,10 +101,10 @@ namespace RapidBlazor.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers()
-                        .RequireAuthorization(nameof(Shared.Policies.Policies.ApiPolicy));
+                endpoints.MapControllers();
             });
         }
     }
