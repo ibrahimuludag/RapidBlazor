@@ -6,14 +6,12 @@ namespace RapidBlazor.Shared.Policies
     {
         public static (string Name, AuthorizationPolicy Value)[] ApiPolicies => 
             new (string, AuthorizationPolicy)[] { 
-                (nameof(Policies.AdminPolicy) , Policies.AdminPolicy),
-                (nameof(Policies.ApiPolicy ) , Policies.ApiPolicy)
+                (nameof(Policies.AdminPolicy) , Policies.AdminPolicy)
         };
 
         public static (string Name, AuthorizationPolicy Value)[] WebUIPolicies =>
             new (string, AuthorizationPolicy)[] {
-                (nameof(Policies.AdminPolicy) , Policies.AdminPolicy),
-                (nameof(Policies.ApiPolicy) , Policies.ApiPolicy)
+                (nameof(Policies.AdminPolicy) , Policies.AdminPolicy)
         };
     }
 }
