@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\RapidBlazor.Api\RapidBlazor.Api.csproj" />
+    <ProjectReference Include="..\..\src\RapidBlazor.DbMigration\RapidBlazor.DbMigration.csproj" />
   </ItemGroup>
 
 </Project>

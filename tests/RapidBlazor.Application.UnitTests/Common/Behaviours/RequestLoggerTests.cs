@@ -11,36 +11,32 @@ namespace RapidBlazor.Application.UnitTests.Common.Behaviours
 {
     public class RequestLoggerTests
     {
-        private readonly Mock<ILogger<CreateTodoItemCommand>> _logger;
-        private readonly Mock<ICurrentUserService> _currentUserService;
-
-        public RequestLoggerTests()
-        {
-            _logger = new Mock<ILogger<CreateTodoItemCommand>>();
-
-            _currentUserService = new Mock<ICurrentUserService>();
-        }
-
         [Test]
         public async Task ShouldCallGetUserNameAsyncOnceIfAuthenticated()
         {
-            _currentUserService.Setup(x => x.UserId).Returns("Administrator");
+            var currentUserService = new Mock<ICurrentUserService>();
+            var logger = new Mock<ILogger<CreateTodoItemCommand>>();
 
-            var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(_logger.Object, _currentUserService.Object);
+            currentUserService.Setup(x => x.UserId).Returns("Administrator");
+
+            var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(logger.Object, currentUserService.Object);
 
             await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
 
-            _currentUserService.Verify(i => i.GetUserName(), Times.Once);
+            currentUserService.Verify(i => i.GetUserName(), Times.Once);
         }
 
         [Test]
         public async Task ShouldNotCallGetUserNameAsyncOnceIfUnauthenticated()
         {
-            var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(_logger.Object, _currentUserService.Object);
+            var currentUserService = new Mock<ICurrentUserService>();
+            var logger = new Mock<ILogger<CreateTodoItemCommand>>();
+
+            var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(logger.Object, currentUserService.Object);
 
             await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
 
-            _currentUserService.Verify(i => i.GetUserName(), Times.Never);
+            currentUserService.Verify(i => i.GetUserName(), Times.Never);
         }
     }
 }

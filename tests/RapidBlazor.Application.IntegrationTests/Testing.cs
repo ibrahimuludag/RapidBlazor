@@ -13,6 +13,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
+using System.Security.Claims;
+using IdentityModel;
+using System.Threading;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using RapidBlazor.Application.IntegrationTests.Fakes;
 
 [SetUpFixture]
 public class Testing
@@ -20,10 +28,11 @@ public class Testing
     private static IConfigurationRoot _configuration;
     private static IServiceScopeFactory _scopeFactory;
     private static Checkpoint _checkpoint;
-    private static string _currentUserId;
+    private static Mock<IHttpContextAccessor> mockHttpContextAccessor = new();
+    private static DefaultHttpContext context = new();
 
     [OneTimeSetUp]
-    public void RunBeforeAnyTests()
+    public async Task RunBeforeAnyTests()
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -43,17 +52,8 @@ public class Testing
         services.AddLogging();
 
         startup.ConfigureServices(services);
-
-        // Replace service registration for ICurrentUserService
-        // Remove existing registration
-        var currentUserServiceDescriptor = services.FirstOrDefault(d =>
-            d.ServiceType == typeof(ICurrentUserService));
-
-        services.Remove(currentUserServiceDescriptor);
-
-        // Register testing version
-        services.AddTransient(provider =>
-            Mock.Of<ICurrentUserService>(s => s.UserId == _currentUserId));
+        RegisterMockHttpContext(services);
+        RegisterFakeAuthorizationService(services); // TODO : Make DefaultAuthorizationService to work with testing
 
         _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
 
@@ -62,78 +62,79 @@ public class Testing
             TablesToIgnore = new[] { "__EFMigrationsHistory" }
         };
 
-        EnsureDatabase();
+        await EnsureDatabase();
     }
 
-    private static void EnsureDatabase()
+    private static void RegisterMockHttpContext(ServiceCollection services) {
+        var currentDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IHttpContextAccessor));
+        services.Remove(currentDescriptor);
+        mockHttpContextAccessor.Setup(_ => _.HttpContext).Returns(context);
+        services.AddSingleton<IHttpContextAccessor>(mockHttpContextAccessor.Object);
+    }
+
+    private static void RegisterFakeAuthorizationService(ServiceCollection services)
     {
-        using var scope = _scopeFactory.CreateScope();
-
-        var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-
-        context.Database.Migrate();
+        var currentDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IAuthorizationService));
+        services.Remove(currentDescriptor);
+        services.AddSingleton<IAuthorizationService>(new FakeAuthorizationService());
+    }
+    private static async Task EnsureDatabase()
+    {
+        await RapidBlazor.DbMigration.Program.CreateHostBuilder(Array.Empty<string>()).RunConsoleAsync();
     }
 
     public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
     {
         using var scope = _scopeFactory.CreateScope();
 
-        var mediator = scope.ServiceProvider.GetService<ISender>();
+        var mediator = scope.ServiceProvider.GetService<ISender>();       
 
         return await mediator.Send(request);
     }
 
-    public static async Task<string> RunAsDefaultUserAsync()
+    public static void RunAsAnonymUser()
     {
-        return await RunAsUserAsync("test@local", "Testing1234!", new string[] { });
+        var identity = new ClaimsIdentity(Array.Empty<Claim>());
+        mockHttpContextAccessor.Object.HttpContext.User = new ClaimsPrincipal(identity);
     }
 
-    public static async Task<string> RunAsAdministratorAsync()
+    public static string RunAsDefaultUser()
     {
-        return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { "Administrator" });
+        return RunAsUser("test@local", new string[] { });
     }
 
-    public static async Task<string> RunAsUserAsync(string userName, string password, string[] roles)
+    public static string RunAsAdministrator()
     {
-        // TODO : Add Claims
-        //using var scope = _scopeFactory.CreateScope();
+        return RunAsUser("administrator@local", new[] { "admin" });
+    }
 
-        //var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
-
-        //var user = new ApplicationUser { UserName = userName, Email = userName };
-
-        //var result = await userManager.CreateAsync(user, password);
-
-        //if (roles.Any())
-        //{
-        //    var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
-
-        //    foreach (var role in roles)
-        //    {
-        //        await roleManager.CreateAsync(new IdentityRole(role));
-        //    }
-
-        //    await userManager.AddToRolesAsync(user, roles);
-        //}
-
-        //if (result.Succeeded)
-        //{
-        //    _currentUserId = user.Id;
-
-        //    return _currentUserId;
-        //}
-
-        //var errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
-
-        //throw new Exception($"Unable to create {userName}.{Environment.NewLine}{errors}");
-        _currentUserId = "SYSTEM";
-        return _currentUserId;
+    public static string RunAsUser(string userName, string[] roles)
+    {
+        var claims = new List<Claim>()
+        {
+            new Claim(JwtClaimTypes.Name, userName),
+            new Claim(JwtClaimTypes.GivenName, userName),
+            new Claim(JwtClaimTypes.FamilyName, userName),
+            new Claim(JwtClaimTypes.Email, $"{userName}@rapidblazor.com"),
+            new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+            new Claim(JwtClaimTypes.WebSite, "https://rapidblazor.com"),
+            new Claim(JwtClaimTypes.Subject, userName),
+            new Claim(JwtClaimTypes.PreferredUserName, userName)
+        };
+        
+        foreach(var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
+        var identity = new ClaimsIdentity(claims);
+        mockHttpContextAccessor.Object.HttpContext.User = new ClaimsPrincipal(identity);
+        
+        return userName;
     }
 
     public static async Task ResetState()
     {
         await _checkpoint.Reset(_configuration.GetConnectionString("DefaultConnection"));
-        _currentUserId = null;
     }
 
     public static async Task<TEntity> FindAsync<TEntity>(params object[] keyValues)
@@ -170,5 +171,9 @@ public class Testing
     [OneTimeTearDown]
     public void RunAfterAnyTests()
     {
+        RunAsAnonymUser();
+
     }
+
+  
 }

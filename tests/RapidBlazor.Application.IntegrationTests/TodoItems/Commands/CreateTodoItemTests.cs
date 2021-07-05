@@ -25,7 +25,7 @@ namespace RapidBlazor.Application.IntegrationTests.TodoItems.Commands
         [Test]
         public async Task ShouldCreateTodoItem()
         {
-            var userId = await RunAsDefaultUserAsync();
+            var userId = RunAsDefaultUser();
 
             var listId = await SendAsync(new CreateTodoListCommand
             {

@@ -30,7 +30,7 @@ namespace RapidBlazor.Application.IntegrationTests.TodoItems.Commands
         [Test]
         public async Task ShouldUpdateTodoItem()
         {
-            var userId = await RunAsDefaultUserAsync();
+            var userId = RunAsDefaultUser();
 
             var listId = await SendAsync(new CreateTodoListCommand
             {

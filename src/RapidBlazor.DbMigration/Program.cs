@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace RapidBlazor.DbMigration
 {
-    class Program
+    public class Program
     {
         static async Task Main(string[] args)
         {
-            await CreateHostBuilder(args).RunConsoleAsync();            
+            await CreateHostBuilder(args).RunConsoleAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

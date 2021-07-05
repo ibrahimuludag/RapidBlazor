@@ -41,7 +41,7 @@ namespace RapidBlazor.Application.IntegrationTests.TodoLists.Commands
         [Test]
         public async Task ShouldCreateTodoList()
         {
-            var userId = await RunAsDefaultUserAsync();
+            var userId = RunAsDefaultUser();
 
             var command = new CreateTodoListCommand
             {

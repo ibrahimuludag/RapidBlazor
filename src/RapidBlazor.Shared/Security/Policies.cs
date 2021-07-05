@@ -7,8 +7,14 @@ namespace RapidBlazor.Shared.Security
         public static AuthorizationPolicy AdminPolicy = 
             new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
-                .RequireRole("admin")
+                .RequireRole(Constants.AdminRole)
                 .Build();
-        
+
+        public static AuthorizationPolicy PurgePolicy =
+            new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .RequireRole(Constants.AdminRole)
+                .Build();
+
     }
 }

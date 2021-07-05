@@ -18,6 +18,8 @@ namespace RapidBlazor.Application.IntegrationTests.TodoLists.Commands
         [Test]
         public void ShouldDenyAnonymousUser()
         {
+            RunAsAnonymUser();
+
             var command = new PurgeTodoListsCommand();
 
             command.GetType().Should().BeDecoratedWith<AuthorizeAttribute>();
@@ -27,9 +29,9 @@ namespace RapidBlazor.Application.IntegrationTests.TodoLists.Commands
         }
 
         [Test]
-        public async Task ShouldDenyNonAdministrator()
+        public void ShouldDenyNonAdministrator()
         {
-            await RunAsDefaultUserAsync();
+            RunAsDefaultUser();
 
             var command = new PurgeTodoListsCommand();
 
@@ -38,9 +40,9 @@ namespace RapidBlazor.Application.IntegrationTests.TodoLists.Commands
         }
 
         [Test]
-        public async Task ShouldAllowAdministrator()
+        public void ShouldAllowAdministrator()
         {
-            await RunAsAdministratorAsync();
+            RunAsAdministrator();
 
             var command = new PurgeTodoListsCommand();
 
@@ -51,7 +53,7 @@ namespace RapidBlazor.Application.IntegrationTests.TodoLists.Commands
         [Test]
         public async Task ShouldDeleteAllLists()
         {
-            await RunAsAdministratorAsync();
+            RunAsAdministrator();
 
             await SendAsync(new CreateTodoListCommand
             {

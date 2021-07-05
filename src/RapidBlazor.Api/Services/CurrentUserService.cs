@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+using IdentityModel;
 
 namespace RapidBlazor.Api.Services
 {
@@ -17,10 +18,13 @@ namespace RapidBlazor.Api.Services
             _authorizationService = authorizationService;
         }
 
-        public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(JwtClaimTypes.Subject) ??
+                                _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public string GetUserName() => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Name);
-        
+        public string GetUserName() => _httpContextAccessor.HttpContext?.User?.FindFirstValue(JwtClaimTypes.PreferredUserName) ??
+                                       _httpContextAccessor.HttpContext?.User?.FindFirstValue(JwtClaimTypes.Email) ??
+                                       _httpContextAccessor.HttpContext?.User?.FindFirstValue(JwtClaimTypes.Name);
+
         public async Task<bool> IsInPolicy(string policyName)
         {
             var result = await _authorizationService.AuthorizeAsync(_httpContextAccessor?.HttpContext?.User, policyName);

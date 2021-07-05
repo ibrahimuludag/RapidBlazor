@@ -5,7 +5,6 @@ using RapidBlazor.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RapidBlazor.Infrastructure.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System;
 
@@ -63,9 +62,6 @@ namespace RapidBlazor.Infrastructure
                     .AllowCredentials();
                 });
             });
-
-            services.AddOptions<ApplicationSettings>()
-                .Bind(configuration.GetSection("ApplicationSettings"));
 
             return services;
         }
